@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0f0f12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dumbbell Aesthetic">
+<title>Home Dumbbell Aesthetic</title>
+<style>
+:root{--bg:#0f0f12;--card:#1a1a1f;--line:#2c2c35;--tx:#f2f2f5;--mut:#a9a9b6;--ac:#4f8cff;--ok:#39ff88}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+nav{position:sticky;top:0;height:100vh;padding:28px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+nav h1{font-size:19px;line-height:1.25;margin:0 10px 20px}nav h1 span{color:var(--ac)}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:10px 12px;color:var(--mut)}
+nav button:hover{background:#17171c}
+nav button[aria-current=true]{background:var(--card);color:var(--tx);box-shadow:inset 3px 0 var(--ac)}
+nav b{font-weight:600}nav small{display:block;font-size:13px}.s{display:none}
+.col{min-width:0}main{padding:36px 32px;max-width:960px}
+h2{font-size:30px;line-height:1.2;margin:.1em 0 .3em}
+h3{font-size:14px;color:var(--ac);margin:20px 0 4px}
+.k{color:var(--ac);font-weight:600;margin:0}.m{color:var(--mut);font-size:14px;margin:.3em 0}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:16px 0 6px}
+.bar i{display:block;height:100%;background:var(--ok);transition:width .3s}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.pri{background:var(--ac);color:#08080c;border:0;border-radius:10px;padding:12px 20px;font-weight:700}
+.acts button:not(.pri),.rest,select,input[type=search]{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.list{list-style:none;margin:26px 0;padding:0;display:grid;gap:12px}
+.list li{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.list li.done{opacity:.6}.list li.done .link{text-decoration:line-through}
+input[type=checkbox]{width:26px;height:26px;accent-color:var(--ok);margin:2px 0 0}
+.link{background:none;border:0;padding:0;font-weight:600;font-size:17px;text-align:left}.link:hover{color:var(--ac)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
+.tags span{font-size:12px;padding:2px 10px;border-radius:99px;background:#262630;color:#c9d6ff}
+.cue{font-size:14px;color:var(--mut);margin:8px 0 0}.sub{font-size:14px;color:var(--ok);margin:4px 0 0}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.filters input{flex:1;min-width:200px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card:hover{border-color:var(--ac)}
+dialog{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:16px;padding:0;width:min(660px,94vw);max-height:90vh;overflow:auto}
+dialog::backdrop{background:#000b}
+.x{position:absolute;top:10px;right:10px;z-index:3;width:44px;height:44px;border-radius:50%;border:0;background:#000a}
+.vid{aspect-ratio:16/9;background:#111;position:relative;display:grid;place-items:center}
+.vid video,.vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+.vid img.flip{animation:f 2s steps(1) infinite}
+@keyframes f{0%{opacity:1}50%{opacity:0}}
+.ph{color:var(--mut);padding:20px;text-align:center}
+.pad{padding:8px 22px 24px}.pad p,.pad ol{margin:0}.pad ol{padding-left:20px}
+.note{background:#242a3a;border-radius:10px;padding:8px 12px;font-size:14px;margin:12px 0 0}
+#timer{position:fixed;right:20px;bottom:20px;background:var(--card);border:1px solid var(--ac);border-radius:16px;padding:12px 16px;display:flex;gap:10px;align-items:center;z-index:9;box-shadow:0 8px 30px #000a}
+#timer[hidden]{display:none}#tt{font:700 28px/1 ui-monospace,Menlo,monospace;min-width:84px}
+#timer button{background:#26262e;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+footer{padding:24px 32px 44px;color:var(--mut);font-size:13px;border-top:1px solid var(--line)}
+footer a{color:var(--ac)}footer p{margin:.4em 0;max-width:70ch}
+@media(max-width:760px){
+ #app{display:block}
+ nav{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;gap:2px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));border-top:1px solid var(--line);border-right:0;background:#121216;z-index:5}
+ nav h1,.l,nav small{display:none}.s{display:block}
+ nav button{text-align:center;padding:12px 0;font-size:13px}
+ nav button[aria-current=true]{box-shadow:inset 0 3px var(--ac)}
+ main{padding:calc(24px + env(safe-area-inset-top)) 16px 24px}footer{padding:20px 16px 100px}
+ h2{font-size:25px}
+ #timer{left:12px;right:12px;bottom:calc(72px + env(safe-area-inset-bottom));justify-content:space-between}
+}
+@media(prefers-reduced-motion:reduce){.vid img.flip{animation:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div id="app">
+ <nav aria-label="Workout days"></nav>
+ <div class="col">
+  <main id="main"></main>
+  <footer>
+   <p>Consult a physician before starting any new exercise program.</p>
+   <p>Mid-week break option: Push / Pull / Legs / Rest / Upper / Lower / Rest. Keep at least 48 hours between sessions that hit the same muscle group.</p>
+   <p>Demo media and instructions: <a href="https://github.com/yuhonas/free-exercise-db" target="_blank" rel="noopener">Free Exercise DB</a> · <a href="https://github.com/exercisedb/exercisedb-api" target="_blank" rel="noopener">ExerciseDB API docs</a>. <span id="apist"></span></p>
+  </footer>
+ </div>
+</div>
+<dialog id="dlg" aria-label="Exercise details"></dialog>
+<div id="timer" hidden role="group" aria-label="Rest timer">
+ <span id="tt" role="timer">01:00</span>
+ <button data-t="-15" aria-label="Subtract 15 seconds">−15s</button>
+ <button id="tg">Start</button>
+ <button data-t="15" aria-label="Add 15 seconds">+15s</button>
+ <button id="tx" aria-label="Close timer">✕</button>
+</div>
+<script>
+/* ================= EDIT HERE: API, exercise library, weekly plan ================= */
+const API={url:"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json",
+ imageBase:"https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/"};
+
+// [id, name, muscle, equipment (Dumbbell | Tube | Bodyweight), form cue, common mistake, optional API search name]
+const LIB=[
+["floor-press","Dumbbell Floor Press","Chest","Dumbbell","Main chest builder. Elbows ~45° from torso; upper arms touch the floor at the bottom, press until arms lock.","Flaring elbows to 90° or bouncing off the floor.","dumbbell floor press"],
+["floor-fly","Dumbbell Floor Fly","Chest","Dumbbell","Slight elbow bend, light touch on the floor, squeeze like hugging a tree.","Straightening the arms and turning it into a press.","dumbbell flyes"],
+["sa-floor-press","Single-Arm Floor Press","Chest","Dumbbell","One dumbbell. Brace your core so the torso doesn't rotate (anti-rotation work).","Letting the torso twist toward the weight.","one arm dumbbell floor press"],
+["pushup","Push-Up","Chest","Bodyweight","Straight line head to heels, elbows ~45°. Elevate feet on a chair for upper-chest emphasis.","Sagging hips or flaring elbows wide.","push ups"],
+["tube-chest","Tube Chest Fly / Press","Chest","Tube","Anchor in a door or stand on the tube. Great finisher or warm-up; squeeze at lockout.","Shrugging shoulders toward the ears.","band chest press"],
+["bo-row","Dumbbell Bent-Over Row","Back","Dumbbell","Hinge to ~45°, flat back, pull to the hip crease.","Rounding the back or yanking with momentum.","bent over two dumbbell row"],
+["oa-row","One-Arm Dumbbell Row","Back","Dumbbell","Support the free hand on a chair or your thigh; pull elbow to hip and pause.","Twisting the torso to lift the weight.","one arm dumbbell row"],
+["renegade","Renegade Row","Back","Dumbbell","Plank with feet wide; row without letting the hips rotate. Hits back and core.","Hips twisting or sagging as you row.","renegade row"],
+["pullover","Dumbbell Pullover (Floor)","Back","Dumbbell","Arms slightly bent; lower the dumbbell overhead for a lat and chest stretch.","Bending the elbows into a triceps extension.","dumbbell pullover"],
+["tube-back","Tube Lat Pulldown / Seated Row","Back","Tube","Anchor high for pulldowns or low for rows; lead with the elbows and squeeze the shoulder blades.","Leaning back to cheat the pull.","band row"],
+["ohp","Standing Dumbbell Overhead Press","Shoulders","Dumbbell","The #1 broad-shoulder builder. Ribs down, glutes tight, press straight up (Arnold press also works).","Arching the low back.","dumbbell shoulder press"],
+["alt-press","Alternating Dumbbell Shoulder Press","Shoulders","Dumbbell","One arm presses while the other stays racked; core braces.","Leaning sideways away from the pressing arm.","alternating dumbbell shoulder press"],
+["lateral","Dumbbell Lateral Raise","Shoulders","Dumbbell","Lead with the elbows; stop at shoulder height.","Shrugging and swinging heavy weights.","side lateral raise"],
+["rear-fly","Bent-Over Reverse Fly (Rear Delt Raise)","Shoulders","Dumbbell","Hinge forward with soft elbows. Rear delts give the 3D shoulder look.","Rounding the back or using momentum.","reverse flyes"],
+["face-pull","Tube Face Pull","Shoulders","Tube","High anchor; pull toward your eyes with elbows high. Rear delts and shoulder health.","Pulling to the chest with low elbows.","face pull"],
+["curl","Standing Dumbbell Curl","Arms","Dumbbell","Elbows pinned to your sides; lower slowly.","Swinging the torso.","dumbbell bicep curl"],
+["hammer","Hammer Curl","Arms","Dumbbell","Palms face each other. Builds the brachialis (arm thickness).","Elbows drifting forward.","hammer curls"],
+["oh-tri","Overhead Triceps Extension","Arms","Dumbbell","One or two dumbbells; elbows point forward for long-head emphasis.","Elbows flaring and the low back arching.","standing dumbbell triceps extension"],
+["skull","Floor Skull Crusher","Arms","Dumbbell","Elbows fixed; lower toward the forehead or behind the head until the arms touch the floor.","Elbows drifting wide.","lying dumbbell triceps extension"],
+["kickback","Triceps Kickback","Arms","Dumbbell","Dumbbell or tube; upper arm stays still, squeeze at lockout.","Swinging the arm instead of extending the elbow.","triceps kickback"],
+["tube-arms","Tube Biceps Curl / Triceps Pushdown","Arms","Tube","Stand on the tube for curls or anchor high for pushdowns. Constant tension.","Letting the tube snap your arms back.","band curl"],
+["goblet","Goblet Squat","Legs","Dumbbell","Hold one dumbbell vertically at your chest; squat to full depth.","Heels lifting or knees caving in.","goblet squat"],
+["rdl","Dumbbell Romanian Deadlift (RDL)","Legs","Dumbbell","Soft knees, push hips back, weights close to the shins.","Rounding the low back or squatting it down.","romanian deadlift"],
+["bulgarian","Bulgarian Split Squat","Legs","Dumbbell","Rear foot on a chair; the most effective unilateral leg builder.","Front foot too close, so the knee shoots forward.","split squat dumbbells"],
+["rev-lunge","Reverse Lunge","Legs","Dumbbell","Step back with the front shin vertical. Balance plus glute and quad focus.","Short step that pushes the knee far past the toes.","dumbbell rear lunge"],
+["sumo","Dumbbell Sumo Squat","Legs","Dumbbell","One dumbbell, wide stance, toes out. Inner thigh and glute emphasis.","Knees collapsing inward.","sumo squat"],
+["calf","Standing Calf Raise","Legs","Dumbbell","Full stretch at the bottom, pause at the top.","Bouncing out of the bottom.","standing dumbbell calf raise"],
+["tube-legs","Tube Squat / Leg Press / Hamstring Curl","Legs","Tube","Good for warm-ups or higher-rep pump work.","Letting the tube pull you off balance.","band squat"],
+["bw-squat","Bodyweight Squat","Legs","Bodyweight","Chest tall, sit between the hips, drive up through the heels.","Knees caving in.","bodyweight squat"],
+["plank","Plank","Core","Bodyweight","Squeeze glutes, ribs down.","Hips sagging or piking up.","plank"],
+["leg-raise","Lying Leg Raise","Core","Bodyweight","Lower back pressed into the floor.","Back arching as the legs lower.","lying leg raise"],
+["russian","Dumbbell Russian Twist","Core","Dumbbell","One dumbbell; controlled rotation. Feet down is fine.","Rounding the spine and swinging the weight.","russian twist"],
+["farmer","Farmer's Carry","Core","Dumbbell","Walk tall holding the dumbbells. Works traps, grip and core.","Leaning to one side or shrugging.","farmers walk"],
+["climber","Mountain Climber","Core","Bodyweight","Hands under shoulders, drive knees toward the chest, hips level.","Hips piking up.","mountain climbers"]
+];
+
+// [exercise id, sets, reps, rest in seconds (0 = no rest), optional note]
+const PLAN=[
+{day:"Monday",focus:"Push · Chest, Shoulders, Triceps",ex:[["floor-press",4,"8–10",60],["ohp",3,"8–12",60,"Or Arnold press"],["pushup",3,"AMRAP",45,"Stop 2 reps short; feet elevated if possible"],["oh-tri",3,"12–15",45],["lateral",3,"12–15",45]]},
+{day:"Tuesday",focus:"Pull · Back, Biceps, Rear Delts",ex:[["bo-row",4,"8–10",60],["oa-row",3,"10–12 per side",45],["curl",3,"10–12",0,"Superset with Hammer Curl, no rest between"],["hammer",3,"10–12",45,"Rest after the pair"],["rear-fly",3,"12–15",45],["face-pull",3,"15–20",30]]},
+{day:"Wednesday",focus:"Legs + Core",ex:[["goblet",4,"10–12",75],["rdl",4,"10–12",75],["bulgarian",3,"10–12 per leg",60,"Rear foot on a chair"],["calf",3,"15–20",45],["plank",3,"40–60 s",30]]},
+{day:"Thursday",focus:"Upper V-Taper · Shoulders, Back, Arms, Core",ex:[["ohp",4,"8–10",60],["oa-row",3,"10–12 per side",45],["lateral",3,"12–15",0,"Superset with Bicep Curl, no rest between"],["curl",3,"12–15",45,"Rest after the pair"],["skull",3,"10–12",45],["leg-raise",3,"12–15",30]]},
+{day:"Friday",focus:"Lower Body + Conditioning",ex:[["goblet",3,"12–15",60,"Slightly higher reps"],["rdl",3,"12–15",60],["farmer",3,"30–40 m",45],["russian",3,"20 total",30],["bw-squat",3,"15",0,"Finisher circuit, 3 rounds: squat → push-up → climber"],["pushup",3,"10",0,"Finisher circuit"],["climber",3,"20",20,"Finisher circuit: 20 s rest between rounds"]]}
+];
+/* ================= END EDIT AREA ================= */
+
+const $=s=>document.querySelector(s);
+const LS={get(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const EX=Object.fromEntries(LIB.map(([id,name,muscle,equip,cue,mistake,match])=>[id,{name,muscle,equip,cue,mistake,match:match||name}]));
+PLAN.forEach(d=>d.ex=d.ex.map(([id,sets,reps,rest,note])=>({id,sets,reps,rest,note})));
+const EQ={Tube:'Resistance Tube'},EQA={Dumbbell:'dumbbell',Tube:'bands',Bodyweight:'body only'};
+const MUSCLES=['Chest','Back','Shoulders','Arms','Legs','Core'],EQUIP=['Dumbbell','Tube','Bodyweight'];
+let M={},api='loading',view,cur,F={},prog=LS.get('hda_progress_v1')||{};
+const tags=e=>`<div class="tags"><span>${e.muscle}</span><span>${EQ[e.equip]||e.equip}</span></div>`;
+
+/* ---------- API: fetch, match names to API exercises, cache the matches ---------- */
+const tok=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().split(' ').map(t=>t.replace(/s$/,''));
+const slim=x=>({n:x.name,i:[].concat(x.instructions||x.steps||[]),p:x.primaryMuscles||(x.target?[x.target]:[]),s:x.secondaryMuscles||[],
+ v:x.videoUrl||x.video||x.gifUrl||'',im:(x.images||[]).map(p=>/^http/.test(p)?p:API.imageBase+p)});
+function matchAll(list){const out={};
+ for(const [id,e] of Object.entries(EX)){const q=tok(e.match);let best=null,bs=0;
+  for(const x of list){const n=tok(x.name),h=q.filter(t=>n.includes(t)).length,r=h/q.length;if(r<.5)continue;
+   const s=r-.03*(n.length-h)+(x.equipment===EQA[e.equip]?.3:0);
+   if(s>bs){bs=s;best={x,exact:h===q.length&&n.length===q.length}}}
+  if(best)out[id]={...slim(best.x),exact:best.exact}}
+ return out}
+async function loadApi(){
+ const sig=API.url+Object.values(EX).map(e=>e.match).join('|'),c=LS.get('hda_api_v1');
+ if(c&&c.sig===sig){M=c.m;api='ok'}
+ else try{const r=await fetch(API.url);if(!r.ok)throw 0;const j=await r.json();
+  M=matchAll(Array.isArray(j)?j:j.data||j.exercises||[]);api='ok';LS.set('hda_api_v1',{sig,m:M})}catch{api='error'}
+ $('#apist').textContent=api==='ok'?'Demos loaded.':'Demos unavailable right now.';
+ if($('#dlg').open)$('#dlg').innerHTML=exHtml(cur)}
+
+/* ---------- views ---------- */
+function nav(){$('nav').innerHTML='<h1>Home <span>Dumbbell</span> Aesthetic</h1>'+
+ [...PLAN.map(d=>[d.day,d.day.slice(0,3),d.day,d.focus.split(' · ')[0]]),['lib','Library','Library','All exercises']]
+ .map(([k,s,l,f])=>`<button data-v="${k}" ${k===view?'aria-current="true"':''}><b class="s">${s}</b><b class="l">${l}</b><small>${esc(f)}</small></button>`).join('')}
+function day(d){const p=prog[d.day]||{},n=d.ex.filter(x=>p[x.id]).length,t=d.ex.length;
+ return `<header><p class="k">${d.day}</p><h2>${esc(d.focus)}</h2>
+ <div class="bar" role="progressbar" aria-label="Exercises completed" aria-valuemin="0" aria-valuemax="${t}" aria-valuenow="${n}"><i style="width:${n/t*100}%"></i></div>
+ <p class="m">${n} of ${t} done${n===t?' — nice work!':''}</p>
+ <div class="acts"><button class="pri" data-start="${d.day}">Start Workout</button><button data-reset="${d.day}">Reset day</button></div></header>
+ <ul class="list">${d.ex.map(x=>{const e=EX[x.id],id=`c-${d.day}-${x.id}`;
+ return `<li class="${p[x.id]?'done':''}"><input type="checkbox" id="${id}" data-chk="${d.day}|${x.id}" ${p[x.id]?'checked':''} aria-label="Mark ${esc(e.name)} done">
+ <div><button class="link" data-ex="${x.id}">${esc(e.name)}</button><div class="m">${x.sets} sets × ${esc(x.reps)}${x.rest?` · rest ${x.rest}s`:''}</div>${x.note?`<p class="sub">${esc(x.note)}</p>`:''}${tags(e)}<p class="cue">Form cue: ${esc(e.cue)}</p></div>
+ ${x.rest?`<button class="rest" data-rest="${x.rest}" aria-label="Start ${x.rest} second rest timer">${x.rest}s rest</button>`:'<span></span>'}</li>`}).join('')}</ul>`}
+function lib(){const o=(a,all)=>`<option value="">${all}</option>`+a.map(v=>`<option value="${v}">${EQ[v]||v}</option>`).join('');
+ return `<header><p class="k">${LIB.length} exercises</p><h2>Exercise Library</h2></header>
+ <div class="filters"><input type="search" id="q" placeholder="Search exercises" aria-label="Search exercises" value="${esc(F.q||'')}">
+ <select id="fm" aria-label="Muscle group">${o(MUSCLES,'All muscles')}</select><select id="fe" aria-label="Equipment">${o(EQUIP,'All equipment')}</select></div><div id="grid" aria-live="polite"></div>`}
+function fill(){const q=(F.q||'').toLowerCase();
+ const l=Object.entries(EX).filter(([,e])=>(!F.m||e.muscle===F.m)&&(!F.e||e.equip===F.e)&&(!q||(e.name+' '+e.muscle+' '+(EQ[e.equip]||e.equip)).toLowerCase().includes(q)));
+ $('#grid').innerHTML=l.length?`<div class="grid">${l.map(([id,e])=>`<button class="card" data-ex="${id}"><strong>${esc(e.name)}</strong>${tags(e)}</button>`).join('')}</div>`
+  :'<p class="m">No exercises match. Clear the search or filters to see all of them.</p>'}
+function render(){nav();$('#main').innerHTML=view==='lib'?lib():day(PLAN.find(d=>d.day===view));
+ if(view==='lib'){$('#fm').value=F.m||'';$('#fe').value=F.e||'';fill()}}
+
+/* ---------- exercise detail ---------- */
+function media(m,name){if(!m)return'<div class="ph">No demo found for this exercise.</div>';
+ if(/\.(mp4|webm)(\?|$)/i.test(m.v))return`<video src="${esc(m.v)}" poster="${esc(m.im[0]||'')}" muted autoplay loop playsinline aria-label="${esc(name)} demonstration"></video>`;
+ const im=/\.(gif|webp|png|jpe?g)(\?|$)/i.test(m.v)?[m.v]:m.im;
+ if(!im.length)return'<div class="ph">No demo found for this exercise.</div>';
+ return im.slice(0,2).map((s,k)=>`<img src="${esc(s)}" alt="${esc(name)}, position ${k+1}" ${im.length>1?`class="flip" style="animation-delay:${k?-1:0}s"`:''}>`).join('')}
+function exHtml(id){const e=EX[id],m=M[id];
+ const vid=api==='loading'?'<div class="ph">Loading demo…</div>':api==='error'?'<div class="ph">Couldn’t reach the exercise API. Check your connection and refresh.</div>':media(m,e.name);
+ const note=api!=='ok'?'':!m?'<p class="note">No close match in the exercise API, so the demo and steps are missing.</p>':!m.exact?`<p class="note">Closest API match: “${esc(m.n)}”. Technique may differ slightly.</p>`:'';
+ const steps=m&&m.i.length?`<ol>${m.i.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>`:`<p class="m">${api==='loading'?'Loading steps…':'Step-by-step instructions are unavailable. Use the form cue below.'}</p>`;
+ const tm=m&&m.p.length?'Primary: '+m.p.join(', ')+(m.s.length?' · Secondary: '+m.s.join(', '):''):e.muscle;
+ return`<form method="dialog"><button class="x" aria-label="Close">✕</button></form><div class="vid">${vid}</div><div class="pad"><h2>${esc(e.name)}</h2>${tags(e)}${note}
+ <h3>Target muscles</h3><p>${esc(tm)}</p><h3>Equipment needed</h3><p>${EQ[e.equip]||e.equip}</p><h3>Steps</h3>${steps}
+ <h3>Form cue</h3><p>${esc(e.cue)}</p><h3>Common mistake</h3><p>${esc(e.mistake)}</p></div>`}
+
+/* ---------- rest timer (uses an end time, so it stays correct if the phone sleeps) ---------- */
+const T={s:60,base:60,run:0,iv:0,end:0,ac:null},fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+function draw(){$('#tt').textContent=fmt(T.s);$('#tg').textContent=T.run?'Pause':T.s?'Start':'Restart'}
+function stop(){clearInterval(T.iv);T.run=0}
+function beep(){try{const o=T.ac.createOscillator();o.connect(T.ac.destination);o.start();o.stop(T.ac.currentTime+.5)}catch{}navigator.vibrate?.([300,100,300])}
+function go(){stop();try{T.ac=T.ac||new(window.AudioContext||window.webkitAudioContext)();T.ac.resume()}catch{}
+ if(!T.s)T.s=T.base;T.run=1;T.end=Date.now()+T.s*1000;
+ T.iv=setInterval(()=>{T.s=Math.max(0,Math.ceil((T.end-Date.now())/1000));if(!T.s){stop();beep()}draw()},250);draw()}
+function setT(s,run){stop();T.s=T.base=s;$('#timer').hidden=false;draw();if(run)go()}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.v){view=t.dataset.v;render();scrollTo(0,0)}
+ else if(t.dataset.ex){cur=t.dataset.ex;$('#dlg').innerHTML=exHtml(cur);$('#dlg').showModal()}
+ else if(t.dataset.start){const d=PLAN.find(x=>x.day===t.dataset.start);setT((d.ex.find(x=>x.rest)||{rest:60}).rest,false)}
+ else if(t.dataset.reset){delete prog[t.dataset.reset];LS.set('hda_progress_v1',prog);render()}
+ else if(t.dataset.rest)setT(+t.dataset.rest,true)
+ else if(t.dataset.t){const w=T.run;T.s=Math.max(0,T.s+ +t.dataset.t);T.base=Math.max(T.base,T.s);if(w)T.end=Date.now()+T.s*1000;draw()}
+ else if(t.id==='tg'){if(T.run){stop();draw()}else go()}
+ else if(t.id==='tx'){stop();$('#timer').hidden=true}});
+$('#dlg').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.close()});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.dataset.chk){const[d,id]=t.dataset.chk.split('|');(prog[d]=prog[d]||{})[id]=t.checked;LS.set('hda_progress_v1',prog);const i=t.id;render();$('#'+CSS.escape(i))?.focus()}
+ else if(t.id==='fm'){F.m=t.value;fill()}else if(t.id==='fe'){F.e=t.value;fill()}});
+document.addEventListener('input',e=>{if(e.target.id==='q'){F.q=e.target.value;fill()}});
+
+view=(PLAN[new Date().getDay()-1]||PLAN[0]).day;render();loadApi();
+</script>
+</body>
+</html>
